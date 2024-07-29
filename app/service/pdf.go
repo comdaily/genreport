@@ -2,6 +2,7 @@
 package service
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -25,7 +26,7 @@ func CreatePDF(browser *rod.Browser, inputURL, path, filename string) error {
 	wait := page.MustWaitRequestIdle()
 
 	// wait until the page is idle
-	defer wait()
+	wait()
 
 	a4Width := 8.27
 	a4Height := 11.7
@@ -52,6 +53,10 @@ func CreatePDF(browser *rod.Browser, inputURL, path, filename string) error {
 	bin, e := io.ReadAll(r)
 	if e != nil {
 		return e
+	}
+	// size of PDF must be greater than 1000 bytes
+	if len(bin) < 1000 {
+		return fmt.Errorf("PDF size is less than 1000 bytes")
 	}
 
 	// create the directories if they do not exist
