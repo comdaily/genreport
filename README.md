@@ -27,3 +27,9 @@ services:
       - ./app:/genreport_dev
       - /path/to/reports:/reports
 ```
+
+## CURL
+
+```shell
+curl "http://ip:port/api/v1/create-pdf?orgID={orgID}&brandID={brandID}&reportID={reportID}&filename={filename.pdf}"
+```
